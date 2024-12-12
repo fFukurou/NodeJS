@@ -1,0 +1,11 @@
+{
+  "name": "how-node-works",
+  "version": "1.0.0",
+  "main": "event-loop.js",
+  "scripts": {
+    "start": "set UV_THREADPOOL_SIZE=4  & node modules.js"
+  },
+  "author": "fFukurou",
+  "license": "ISC",
+  "description": ""
+}
