@@ -1,1 +1,0 @@
-# Repository storing my first projects done on NodeJS, as I was learning the ropes of backend development with JS.
