@@ -1,5 +1,6 @@
 // File to configure the express application
 
+const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
@@ -13,10 +14,18 @@ const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
 
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
+
 // Global Middlewares
+
+// Will load a static file if entered on the browser
+app.use(express.static(path.join(__dirname, 'public')));
 // --------------------- Set security HTTP headers --------------------- 
 app.use(helmet());
 
@@ -48,8 +57,7 @@ app.use(hpp( {
     whitelist: ['duration', 'ratingsAverage', 'ratingsQuantity', 'maxGroupSize', 'difficulty', 'price']
 }));
 
-// Will load a static file if entered on the browser
-app.use(express.static(`${__dirname}/public`));
+
 
 // --------------------- Test Middleware --------------------- 
 app.use((req, res, next) => {
@@ -64,6 +72,9 @@ app.use((req, res, next) => {
 // app.patch('/api/v1/tours/:id', updateTour);
 // app.delete('/api/v1/tours/:id', deleteTour);
 
+// ROUTES TOO
+
+app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
